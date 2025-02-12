@@ -11,6 +11,7 @@ import UseTasks from "../../../hooks/tasks/UseTasks";
 import { AssignTaskContext } from "../Tasks";
 import CloseIcon from "@mui/icons-material/Close";
 import UseRemoveAssignedTask from "../../../hooks/tasks/UseRemoveAssignedTask";
+import TaskStatus from "../../../components/task-statuses/TaskStatus";
 
 function TaskItems() {
   const { assignTask, setAssignTask } = useContext(AssignTaskContext);
@@ -35,18 +36,22 @@ function TaskItems() {
                 <>
                   <Grid item xs={3}>
                     <Box className="task-item" width={"100%"}>
+                      <TaskStatus params={task} />
                       <Stack direction={"column"} alignItems={"flex-start"}>
                         <Typography variant="h4" className="c-white title">
                           {task.title}
                         </Typography>
-                        <Typography variant="h6" className="c-white description">
+                        <Typography
+                          variant="h6"
+                          className="c-white description"
+                        >
                           {task.description}
                         </Typography>
                       </Stack>
                       <Stack direction={"row"} gap={"3px"}>
                         {task.assignedUsers.map((emp) => {
                           return (
-                          <>
+                            <>
                               <div
                                 className="assigned-to"
                                 style={{

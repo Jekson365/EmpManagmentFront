@@ -24,25 +24,30 @@ function NewTask() {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <input
             type="text"
             name="title"
             onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
             className="register-form"
             style={{ width: "100%" }}
-            placeholder="მეილი"
+            placeholder="დასახელება"
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <textarea
+            style={{
+              width: "100%",
+              boxSizing: "border-box",
+            }}
+            p={2}
             type="email"
             name="description"
             onChange={(e) =>
               setNewTask({ ...newTask, description: e.target.value })
             }
+            rows={20}
             className="register-form"
-            style={{ width: "100%" }}
             placeholder="აღწერა"
           />
         </Grid>

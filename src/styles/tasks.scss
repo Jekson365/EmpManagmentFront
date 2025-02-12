@@ -1,6 +1,29 @@
 @import "./config.scss";
 
 .task-item {
+  .task-status {
+    background-color: white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    .icon {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: red;
+    }
+    .name {
+      font-size: 13px;
+    }
+    .task-status-1 {
+      background-color: #578FCA;
+    }
+    .task-status-2 {
+      background-color: #3D8D7A;
+    }
+    .task-status-3 {
+      background-color: #E52020;
+    }
+  }
   .title {
     font-size: 25px;
   }
