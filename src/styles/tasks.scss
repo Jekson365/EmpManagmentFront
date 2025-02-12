@@ -1,0 +1,116 @@
+@import "./config.scss";
+
+.task-item {
+  .title {
+    font-size: 25px;
+  }
+  .description {
+    font-size: 17px;
+    font-weight: bold;
+  }
+  background-color: $color-secondary-green;
+  //   width: 230px;
+  height: 140px;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  .icon {
+    transition: 0.3s;
+    color: white;
+    &:hover {
+      background-color: white;
+      color: $color-secondary-green;
+    }
+  }
+  .assigned-to {
+    position: relative;
+    &:hover .remove-icon {
+      opacity: 1;
+    }
+    .remove-icon {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+      transition: 0.3s;
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    width: 40px;
+    height: 40px;
+    border: 2px solid $color-light;
+    border-radius: 50%;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    // overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+      .emp-info {
+        opacity: 1;
+      }
+    }
+    .emp-info {
+      transition: 0.3s;
+      opacity: 0;
+      left: -16px;
+      top: 60px;
+      color: white;
+      border-radius: 5px;
+      padding: 5px 10px;
+      white-space: nowrap;
+      width: fit-content;
+      background-color: $color-dark-blue;
+      position: absolute;
+      z-index: 10;
+    }
+  }
+}
+
+.emp-list {
+  height: 800px;
+  //   overflow-y: scroll;
+  .emp-list-item {
+    position: relative;
+    background-color: $color-secondary-green;
+    width: 100%;
+    border-radius: 5px;
+    .user-button {
+      position: absolute;
+      left: -30px;
+      top: 17px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: 0.3s;
+      cursor: pointer;
+      &:hover {
+        background-color: $color-secondary-green;
+        color: white;
+      }
+    }
+    .emp-item-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+      background-size: cover;
+    }
+  }
+}

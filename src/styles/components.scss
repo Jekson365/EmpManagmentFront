@@ -1,0 +1,62 @@
+@import "./config.scss";
+
+.table-head {
+  background-color: $color-primary-dark !important;
+}
+.head {
+  .header-name {
+    border: 1px solid $color-secondary-green;
+    color: $color-secondary-green;
+    font-weight: bold;
+    background-color: rgb(189, 255, 192);
+    padding: 2px 20px;
+    font-size: 14px;
+    border-radius: 50px;
+  }
+  .icon {
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+}
+.input-field {
+  border-radius: 3px;
+  border: 2px solid $color-primary-dark;
+  padding: 10px;
+  outline: 0;
+  background-color: rgba(255, 255, 255, 0.705);
+  font-weight: bold;
+  &:focus {
+    background-color: white;
+  }
+}
+.register-form {
+  border-radius: 3px;
+  border: 1px solid $color-primary-dark;
+  outline: 0;
+  text-align: left;
+  padding: 10px 0;
+  text-indent: 10px;
+}
+
+.submit-button {
+  background-color: $color-primary-dark;
+  outline: 0;
+  border: 0;
+  font-weight: bold;
+  color: white;
+  padding: 10px 0;
+  border-radius: 3px;
+  transition: 0.3s;
+  &:hover {
+    cursor: pointer;
+    outline: 2px solid $color-secondary-green;
+  }
+}
+
+.login-form {
+  border-radius: 3px;
+  padding: 100px 70px;
+  background-color: rgb(233, 233, 233);
+}

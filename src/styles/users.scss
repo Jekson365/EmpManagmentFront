@@ -1,0 +1,21 @@
+@import "./config.scss";
+
+.role-button {
+  width: fit-content;
+  padding: 1px 5px;
+  text-transform: capitalize;
+  color: white;
+  letter-spacing: 0.5px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.role-button-admin {
+  background-color: $color-primary-dark;
+}
+.role-button-user {
+  background-color: $color-secondary-green;
+}
+.role-button-superadmin {
+  background-color: $color-secondary-green;
+}
