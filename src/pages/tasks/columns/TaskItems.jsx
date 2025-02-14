@@ -17,9 +17,7 @@ function TaskItems() {
   useEffect(() => {
     handleTasks();
   }, [assignTask]);
-  useEffect(()=> {
-    console.log(currentTaskId)
-  },[currentTaskId])
+
   const updateTasks = (taskId, userId) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
@@ -46,6 +44,7 @@ function TaskItems() {
             <CurrentTask
               taskId={currentTaskId}
               setCurrentTaskId={setCurrentTaskId}
+              
             />
           ) : null}
           <Grid

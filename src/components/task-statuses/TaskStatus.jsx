@@ -1,7 +1,10 @@
 import { Box, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 
 function TaskStatus({ params }) {
+  useEffect(()=> {
+    console.log(params)
+  },[])
   return (
     <>
       <Box className="task-status">
