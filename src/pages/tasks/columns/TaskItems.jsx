@@ -1,19 +1,12 @@
 import {
   Add,
-  BackHand,
-  Padding,
-  PlusOne,
-  PlusOneOutlined,
 } from "@mui/icons-material";
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import UseTasks from "../../../hooks/tasks/UseTasks";
 import { AssignTaskContext } from "../Tasks";
-import CloseIcon from "@mui/icons-material/Close";
-import UseRemoveAssignedTask from "../../../hooks/tasks/UseRemoveAssignedTask";
 import TaskStatus from "../../../components/task-statuses/TaskStatus";
 import AssignedTo from "../../../components/tasks/AssignedTo";
-import UseCurrentTask from "../../../hooks/tasks/UseCurrentTask";
 import CurrentTask from "../current-task/CurrentTask";
 
 function TaskItems() {
@@ -24,7 +17,9 @@ function TaskItems() {
   useEffect(() => {
     handleTasks();
   }, [assignTask]);
-
+  useEffect(()=> {
+    console.log(currentTaskId)
+  },[currentTaskId])
   const updateTasks = (taskId, userId) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
@@ -63,11 +58,15 @@ function TaskItems() {
             {tasks.map((task) => {
               return (
                 <>
-                  <Grid item xs={3} onClick={() => setCurrentTaskId(task.id)}>
+                  <Grid item xs={3}>
                     <Box className="task-item" width={"100%"}>
                       <TaskStatus params={task} />
                       <Stack direction={"column"} alignItems={"flex-start"}>
-                        <Typography variant="h4" className="c-white title">
+                        <Typography
+                          onClick={() => setCurrentTaskId(task.id)}
+                          variant="h4"
+                          className="c-white title"
+                        >
                           {task.title}
                         </Typography>
                       </Stack>

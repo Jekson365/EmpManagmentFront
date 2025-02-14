@@ -1,8 +1,11 @@
 @import "./config.scss";
 
 .task-item-container {
-  height: 800px;
+  // height: 800px;
+
   overflow-y: auto;
+  align-items: flex-start;
+  display: flex;
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -99,7 +102,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: red;
+  background-color: white;
   width: 1200px;
   height: 700px;
 }
@@ -118,5 +121,59 @@
   &:hover {
     background-color: $color-secondary-green;
     color: white;
+  }
+}
+.status-container {
+  height: 30px;
+  .select-bar {
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.04);
+    height: 100%;
+  }
+}
+
+.comments {
+  overflow-y: scroll;
+  height: 590px;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .comment-box {
+    width: 100%;
+    border-radius: 5px;
+    min-height: 100px;
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+.make-comment {
+  width: 100%;
+  input {
+    
+    width: 100%;
+    padding: 10px 0;
+  }
+  button {
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    background-color: $color-secondary-green;
+    padding: 0 10px;
+    border: 0;
   }
 }

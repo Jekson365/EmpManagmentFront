@@ -19,7 +19,6 @@ function App() {
       throw e;
     }
   };
-
   useEffect(() => {
     handleCurrentUser();
   }, []);

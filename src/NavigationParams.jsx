@@ -13,6 +13,8 @@ import Register from "./pages/auth/Register";
 import Tasks from "./pages/tasks/Tasks";
 import MyTask from "./pages/tasks/mytasks/MyTask";
 import NewTask from "./pages/tasks/newtasks/NewTask";
+import { useContext } from "react";
+import { CurrentUserContext } from "./App";
 export const navigationParams = [
   {
     id: 1,
@@ -48,7 +50,7 @@ export const navigationParams = [
   {
     id: 3,
     sectionName: "თასქები",
-  icon: <CheckBox className="color-light" />,
+    icon: <CheckBox className="color-light" />,
     needSuperAdmin: false,
     element: null,
     items: [

@@ -66,6 +66,7 @@ function Login() {
             danger
           </Alert>
         </Snackbar>
+        <Alert>სატესტო იუზერი: email - em | password - 123</Alert>
         <Stack
           className="login-form"
           width={"300px"}

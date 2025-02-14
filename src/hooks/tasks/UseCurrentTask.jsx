@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { API } from "../../api/Api";
 
 function UseCurrentTask() {
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(true);
   const handleCurrentTask = (userId) => {
-    API.get(`api/task/${userId}`).then((res) => {
-      setResult(res.data);
-      setLoading(false);
-    });
+    API.get(`api/task/${userId}`)
+      .then((res) => {
+        setResult(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        throw err;
+      });
   };
   return { result, loading, handleCurrentTask };
 }

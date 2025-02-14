@@ -23,10 +23,9 @@ const ResizableColumn = ({ children, width, onResize }) => {
 function MyTask() {
   const { tasks, loading, handleTasks } = UseTasks();
   const [columns, setColumns] = useState([
-    { key: "description", label: "აღწერა", width: 200 },
-    { key: "task", label: "სტატუსი", width: 200 },
-    { key: "task", label: "დასახელება", width: 200 },
-    { key: "task", label: "მიმაგრებულია", width: 200 },
+    { key: "title", label: "დასახელება", width: 500 },
+    { key: "status", label: "სტატუსი", width: 500 },
+    { key: "assigned_to", label: "მიმაგრებულია", width: 400 },
   ]);
 
   useEffect(() => {
@@ -69,7 +68,6 @@ function MyTask() {
               <>
                 <tr height="50px">
                   <td>{task.title}</td>
-                  <td>{task.description}</td>
                   <td>
                     <TaskStatus params={task} />
                   </td>
