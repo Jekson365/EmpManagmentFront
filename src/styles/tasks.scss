@@ -105,6 +105,29 @@
   background-color: white;
   width: 1200px;
   height: 700px;
+  .status-container {
+    z-index: 1000;
+    width: 200px;
+    .statuses {
+      padding: 1px;
+      background-color: white;
+      border-radius: 0 0 5px 5px;
+      box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.2);
+    }
+    .status-bar-element {
+      height: 40px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      .task-status-element {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
+    }
+  }
 }
 .user-button {
   // position: absolute;
@@ -164,7 +187,6 @@
 .make-comment {
   width: 100%;
   input {
-    
     width: 100%;
     padding: 10px 0;
   }
