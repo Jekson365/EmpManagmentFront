@@ -33,9 +33,11 @@ function Login() {
       setOpen(true);
     }
     try {
-      await API.post("/auth/login", formData).then((res) => {
-        window.location.reload();
-      });
+      await API.post("/auth/login", formData, { withCredentials: true }).then(
+        (res) => {
+          window.location.reload();
+        }
+      );
     } catch (e) {
       setOpen(true);
       throw e;
