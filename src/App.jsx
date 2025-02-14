@@ -9,31 +9,38 @@ export const CurrentUserContext = createContext();
 function App() {
   const [user, setUser] = useState({});
   const [page, setPage] = useState({ sectionId: 1, pageId: 1 });
-  useEffect(() => {
-    const pageParams = JSON.parse(localStorage.getItem("currentPage"));
 
-    setPage({ sectionId: pageParams.sectionId, pageId: pageParams.pageId });
+  useEffect(() => {
+    const pageParams = localStorage.getItem("currentPage");
+
+    if (!pageParams) {
+      const defaultPage = { sectionId: 1, pageId: 1 };
+      localStorage.setItem("currentPage", JSON.stringify(defaultPage));
+      setPage(defaultPage);
+    } else {
+      setPage(JSON.parse(pageParams));
+    }
   }, []);
+
   const handleCurrentUser = async () => {
     try {
-      await API.get("/api/user/current-user").then((res) => {
-        setUser(res.data);
-      });
+      const res = await API.get("/api/user/current-user");
+      setUser(res.data);
     } catch (e) {
-      throw e;
+      console.error("Error fetching current user:", e);
     }
   };
+
   useEffect(() => {
     handleCurrentUser();
   }, []);
+
   return (
-    <>
-      <CurrentUserContext.Provider value={{ user, page, setPage }}>
-        <Routes>
-          <Route path="/" element={<MainLayout />} />
-        </Routes>
-      </CurrentUserContext.Provider>
-    </>
+    <CurrentUserContext.Provider value={{ user, page, setPage }}>
+      <Routes>
+        <Route path="/" element={<MainLayout />} />
+      </Routes>
+    </CurrentUserContext.Provider>
   );
 }
 
