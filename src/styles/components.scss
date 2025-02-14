@@ -3,6 +3,83 @@
 .table-head {
   background-color: $color-primary-dark !important;
 }
+.task-status {
+  background-color: white;
+  padding: 2px 5px;
+  border-radius: 3px;
+  .icon {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: red;
+  }
+  .name {
+    font-size: 13px;
+  }
+  .task-status-1 {
+    background-color: #578fca;
+  }
+  .task-status-2 {
+    background-color: #3d8d7a;
+  }
+  .task-status-3 {
+    background-color: #e52020;
+  }
+}
+.assigned-to {
+  position: relative;
+  &:hover .remove-icon {
+    opacity: 1;
+  }
+  .remove-icon {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transition: 0.3s;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  width: 40px;
+  height: 40px;
+  border: 2px solid $color-light;
+  border-radius: 50%;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  // overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    .emp-info {
+      opacity: 1;
+    }
+  }
+  .emp-info {
+    transition: 0.3s;
+    opacity: 0;
+    left: -16px;
+    top: 60px;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    width: fit-content;
+    background-color: $color-dark-blue;
+    position: absolute;
+    z-index: 10;
+  }
+}
 .head {
   .header-name {
     border: 1px solid $color-secondary-green;
