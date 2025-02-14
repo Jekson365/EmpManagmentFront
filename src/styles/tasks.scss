@@ -1,133 +1,87 @@
 @import "./config.scss";
 
-.task-item {
-  .task-status {
-    background-color: white;
-    padding: 2px 5px;
-    border-radius: 3px;
-    .icon {
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background-color: red;
-    }
-    .name {
-      font-size: 13px;
-    }
-    .task-status-1 {
-      background-color: #578FCA;
-    }
-    .task-status-2 {
-      background-color: #3D8D7A;
-    }
-    .task-status-3 {
-      background-color: #E52020;
-    }
+.task-item-container {
+  height: 800px;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0px;
   }
-  .title {
-    font-size: 25px;
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
   }
-  .description {
-    font-size: 17px;
-    font-weight: bold;
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
   }
-  background-color: $color-secondary-green;
-  //   width: 230px;
-  height: 140px;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  .icon {
-    transition: 0.3s;
-    color: white;
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .task-item {
+    .title {
+      font-size: 25px;
+    }
+    .description {
+      font-size: 17px;
+      font-weight: bold;
+    }
     &:hover {
-      background-color: white;
-      color: $color-secondary-green;
-    }
-  }
-  .assigned-to {
-    position: relative;
-    &:hover .remove-icon {
-      opacity: 1;
-    }
-    .remove-icon {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      top: 50%;
-      left: 50%;
-      opacity: 0;
-      transition: 0.3s;
       cursor: pointer;
-      width: 30px;
-      height: 30px;
-      background-color: rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      color: black;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      transform: scale(1.03);
+      box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.3);
     }
-    width: 40px;
-    height: 40px;
-    border: 2px solid $color-light;
-    border-radius: 50%;
-    background-size: cover;
+    transition: 0.3s;
+    background-color: $color-secondary-green;
+    height: 140px;
+    padding: 15px;
+    border-radius: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    // overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    &:hover {
-      .emp-info {
-        opacity: 1;
-      }
-    }
-    .emp-info {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    .icon {
       transition: 0.3s;
-      opacity: 0;
-      left: -16px;
-      top: 60px;
       color: white;
-      border-radius: 5px;
-      padding: 5px 10px;
-      white-space: nowrap;
-      width: fit-content;
-      background-color: $color-dark-blue;
-      position: absolute;
-      z-index: 10;
+      &:hover {
+        background-color: white;
+        color: $color-secondary-green;
+      }
     }
   }
 }
 
 .emp-list {
   height: 800px;
-  //   overflow-y: scroll;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Enables smooth scrolling on iOS */
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
   .emp-list-item {
     position: relative;
     background-color: $color-secondary-green;
     width: 100%;
     border-radius: 5px;
-    .user-button {
-      position: absolute;
-      left: -30px;
-      top: 17px;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: 0.3s;
-      cursor: pointer;
-      &:hover {
-        background-color: $color-secondary-green;
-        color: white;
-      }
-    }
     .emp-item-image {
       display: flex;
       align-items: center;
@@ -135,5 +89,34 @@
       border: 2px solid white;
       background-size: cover;
     }
+  }
+}
+.current-task-container {
+  position: absolute;
+  z-index: 1000;
+  padding: 10px;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: red;
+  width: 1200px;
+  height: 700px;
+}
+.user-button {
+  // position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: $color-secondary-green;
+    color: white;
   }
 }

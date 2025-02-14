@@ -6,22 +6,39 @@ import {
   PlusOneOutlined,
 } from "@mui/icons-material";
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UseTasks from "../../../hooks/tasks/UseTasks";
 import { AssignTaskContext } from "../Tasks";
 import CloseIcon from "@mui/icons-material/Close";
 import UseRemoveAssignedTask from "../../../hooks/tasks/UseRemoveAssignedTask";
 import TaskStatus from "../../../components/task-statuses/TaskStatus";
+import AssignedTo from "../../../components/tasks/AssignedTo";
+import UseCurrentTask from "../../../hooks/tasks/UseCurrentTask";
+import CurrentTask from "../current-task/CurrentTask";
 
 function TaskItems() {
   const { assignTask, setAssignTask } = useContext(AssignTaskContext);
-  const { tasks, loading, handleTasks } = UseTasks();
-  const { result, handleRemoveAssigned } = UseRemoveAssignedTask();
+  const { tasks, loading, setTasks, handleTasks } = UseTasks();
+  const [currentTaskId, setCurrentTaskId] = useState(null);
 
   useEffect(() => {
     handleTasks();
-    console.log(result);
-  }, [assignTask, result]);
+  }, [assignTask]);
+
+  const updateTasks = (taskId, userId) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              assignedUsers: task.assignedUsers.filter(
+                (emp) => emp.id !== userId
+              ),
+            }
+          : task
+      )
+    );
+  };
   return (
     <>
       {loading ? (
@@ -30,56 +47,39 @@ function TaskItems() {
         </>
       ) : (
         <>
-          <Grid container columnSpacing={5} rowSpacing={2} pr={5}>
+          {currentTaskId != null ? (
+            <CurrentTask
+              taskId={currentTaskId}
+              setCurrentTaskId={setCurrentTaskId}
+            />
+          ) : null}
+          <Grid
+            className="task-item-container"
+            container
+            columnSpacing={5}
+            rowSpacing={2}
+            pr={5}
+          >
             {tasks.map((task) => {
               return (
                 <>
-                  <Grid item xs={3}>
+                  <Grid item xs={3} onClick={() => setCurrentTaskId(task.id)}>
                     <Box className="task-item" width={"100%"}>
                       <TaskStatus params={task} />
                       <Stack direction={"column"} alignItems={"flex-start"}>
                         <Typography variant="h4" className="c-white title">
                           {task.title}
                         </Typography>
-                        <Typography
-                          variant="h6"
-                          className="c-white description"
-                        >
-                          {task.description}
-                        </Typography>
                       </Stack>
                       <Stack direction={"row"} gap={"3px"}>
                         {task.assignedUsers.map((emp) => {
                           return (
                             <>
-                              <div
-                                className="assigned-to"
-                                style={{
-                                  backgroundImage: `url('${import.meta.env.VITE_API_URL}/uploads/${emp.iconPath}')`,
-                                  backgroundColor:
-                                    emp.iconPath == null ? "#f29f67" : null,
-                                }}
-                              >
-                                <div
-                                  className="remove-icon"
-                                  onClick={() =>
-                                    handleRemoveAssigned({
-                                      userId: emp.id,
-                                      taskId: task.id,
-                                    })
-                                  }
-                                >
-                                  <CloseIcon />
-                                </div>
-                                {emp.iconPath == null
-                                  ? emp.name[0] + "" + emp.surname[0]
-                                  : null}
-                                <Stack className="emp-info">
-                                  <Typography>
-                                    {emp.name} {emp.surname}
-                                  </Typography>
-                                </Stack>
-                              </div>
+                              <AssignedTo
+                                emp={emp}
+                                taskId={task.id}
+                                updateTasks={updateTasks}
+                              />
                             </>
                           );
                         })}
