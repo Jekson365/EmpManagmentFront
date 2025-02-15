@@ -7,7 +7,9 @@ function UseFilterTask() {
 
   const handleFilterTask = async (statusId) => {
     try {
-      await API.post(`api/task`, { statusId: statusId }).then((res) => {
+      await API.post(`api/task/get_tasks_by_status`, {
+        statusId: statusId,
+      }).then((res) => {
         setFilteredTasks(res.data);
         setTaskFilterLoading(false);
       });

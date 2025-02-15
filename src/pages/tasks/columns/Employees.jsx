@@ -4,6 +4,7 @@ import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import { AssignTaskContext } from "../Tasks";
 import UseAssignTask from "../../../hooks/tasks/UseAssignTask";
 import { Add } from "@mui/icons-material";
+import UseTasks from "../../../hooks/tasks/UseTasks";
 
 function Employees() {
   const { users, getUsers, loading } = UseUsers();
@@ -12,6 +13,7 @@ function Employees() {
   const handleTaskAssing = (userId) => {
     handleTaskAssign({ taskId: assignTask.taskId, userId: userId });
     setAssignTask({ taskId: "", userId: "" });
+    window.location.reload()
   };
   useEffect(() => {
     getUsers();

@@ -4,13 +4,14 @@ import { API } from "../../api/Api";
 function UseTasks() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const handleTasks = async () => {
+  const handleTasks = async (statusId) => {
     try {
-      await API.get("api/task").then((res) => {
-        setTasks(res.data);
-        setLoading(false);
-      });
+      await API.post("api/task/get_tasks_by_status", { statusId: statusId }).then(
+        (res) => {
+          setTasks(res.data);
+          setLoading(false);
+        }
+      );
     } catch (err) {
       throw err;
     }

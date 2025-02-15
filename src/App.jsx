@@ -12,13 +12,16 @@ function App() {
 
   useEffect(() => {
     const pageParams = localStorage.getItem("currentPage");
-
+    const statusParams = localStorage.getItem("filterStatusId");
     if (!pageParams) {
       const defaultPage = { sectionId: 1, pageId: 1 };
       localStorage.setItem("currentPage", JSON.stringify(defaultPage));
       setPage(defaultPage);
     } else {
       setPage(JSON.parse(pageParams));
+    }
+    if (!statusParams) {
+      localStorage.setItem("filterStatusId", JSON.stringify(null));
     }
   }, []);
 

@@ -10,19 +10,22 @@ import UseCurrentTask from "../../../hooks/tasks/UseCurrentTask";
 import UseTaskStatuses from "../../../hooks/task-statuss/UseTaskStatuses";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import UseFilterTask from "../../../hooks/tasks/UseFilterTask";
-
+import CloseIcon from "@mui/icons-material/Close";
 function TaskItems() {
   const { assignTask, setAssignTask } = useContext(AssignTaskContext);
   const { taskStatuses, handleTaskStatuses } = UseTaskStatuses();
   const { tasks, loading, setTasks, handleTasks } = UseTasks();
   const [currentTaskId, setCurrentTaskId] = useState(null);
+  const [selectedStatusId, setSelectedStatusId] = useState(
+    JSON.parse(localStorage.getItem("filterStatusId"))
+  );
 
   useEffect(() => {
-    handleTasks();
-  }, [assignTask, currentTaskId]);
+    handleTasks(selectedStatusId);
+  }, [currentTaskId]);
 
   useEffect(() => {
-  handleTaskStatuses();
+    handleTaskStatuses();
   }, []);
 
   const handleUpdateStatus = (taskId, statusId, status) => {
@@ -39,6 +42,7 @@ function TaskItems() {
     });
   };
   const updateTasks = (taskId, userId) => {
+    handleTasks(selectedStatusId);
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === taskId
@@ -52,6 +56,20 @@ function TaskItems() {
       )
     );
   };
+
+  const handleTaskAssign = (tasKId) => {
+    setAssignTask({ ...assignTask, taskId: tasKId });
+  };
+
+  const handleTaskFilter = async (statusId) => {
+    localStorage.setItem("filterStatusId", JSON.stringify(statusId));
+    handleTasks(statusId);
+  };
+
+  const handleRemoveFilter = () => {
+    localStorage.setItem("filterStatusId", JSON.stringify(null));
+    handleTasks(null)
+  }
   return (
     <>
       {loading ? (
@@ -67,7 +85,7 @@ function TaskItems() {
               setCurrentTaskId={setCurrentTaskId}
             />
           ) : null}
-          <Stack direction={"row"} gap={"30px"}>
+          <Stack alignItems={"center"} direction={"row"} gap={"30px"}>
             {taskStatuses &&
               taskStatuses.map((e) => {
                 return (
@@ -89,6 +107,11 @@ function TaskItems() {
                   </>
                 );
               })}
+            <div>
+              <div className="user-button" onClick={handleRemoveFilter}>
+                <CloseIcon />
+              </div>
+            </div>
           </Stack>
           <Grid
             mt={2}
@@ -158,9 +181,7 @@ function TaskItems() {
                             style={{
                               border: "0",
                             }}
-                            onClick={() =>
-                              setAssignTask({ ...assignTask, taskId: task.id })
-                            }
+                            onClick={() => handleTaskAssign(task.id)}
                           >
                             <Add />
                           </div>
