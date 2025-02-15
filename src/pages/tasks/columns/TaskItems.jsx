@@ -22,7 +22,7 @@ function TaskItems() {
   }, [assignTask, currentTaskId]);
 
   useEffect(() => {
-    handleTaskStatuses();
+  handleTaskStatuses();
   }, []);
 
   const handleUpdateStatus = (taskId, statusId, status) => {
@@ -102,24 +102,35 @@ function TaskItems() {
               tasks.map((task) => {
                 return (
                   <>
-                    <Grid item xs={3}>
+                    <Grid item xs={12} sm={6} lg={3}>
                       <Box
                         className={`task-item task-background-status-${task.statusId}`}
                         width={"100%"}
                       >
                         {/* <TaskStatus params={task} /> */}
-                        <Stack direction={"column"} gap={'5px'} alignItems={"flex-start"}>
+                        <Stack
+                          direction={"column"}
+                          gap={"5px"}
+                          alignItems={"flex-start"}
+                        >
                           <Typography
                             onClick={() => setCurrentTaskId(task.id)}
-                            variant="h4"
-                            className="c-white title"
+                            variant="h6"
+                            fontWeight={"bold"}
+                            className="c-white"
                           >
                             {task.title}
                           </Typography>
-                          <Typography color="white">{new Date(task.createdAt).toLocaleString()}</Typography>
+                          <Typography color="white">
+                            {new Date(task.endDate).toLocaleString()}
+                          </Typography>
                         </Stack>
-                        <Stack direction={"row"} gap={"3px"}>
-                          {task.assignedUsers.map((emp) => {
+                        <Stack
+                          direction={"row"}
+                          alignItems={"center"}
+                          gap={"3px"}
+                        >
+                          {task.assignedUsers.slice(0, 3).map((emp) => {
                             return (
                               <>
                                 <AssignedTo
@@ -130,6 +141,18 @@ function TaskItems() {
                               </>
                             );
                           })}
+                          {task.assignedUsers.length > 3 ? (
+                            <>
+                              <div
+                                className="assigned-to"
+                                style={{
+                                  backgroundColor: "rgba(255,255,255,0.3)",
+                                }}
+                              >
+                                +{task.assignedUsers.length - 3}
+                              </div>
+                            </>
+                          ) : null}
                           <div
                             className="assigned-to icon"
                             style={{

@@ -93,11 +93,11 @@ function MyTask() {
     handleTasks();
   }, [tasks]);
 
-  const paginationModel = { page: 0, pageSize: 40 };
+  const paginationModel = { page: 2, pageSize: 5 };
 
   return (
     <>
-      <Paper sx={{ height: "100vh", width: "100%" }}>
+      <Paper sx={{ height: "90vh", width: "100%" }}>
         <DataGrid
           rows={tasks}
           columns={columns}
