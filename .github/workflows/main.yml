@@ -21,13 +21,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-
-            # Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' #
+          node-version: '18'  # You can specify any version you prefer (e.g., 16 or 18)
 
       # Install dependencies
       - name: Install dependencies
@@ -36,13 +30,13 @@ jobs:
       # Build the React app
       - name: Build
         run: npm run build
-      - name: Debug SSH Key
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}"
-      - name: deploy server
+
+      # Deploy to server using SSH
+      - name: Deploy to server
         uses: appleboy/ssh-action@v1.1.0
         with:
-          host: 188.40.156.186
-          username: root
+          host: 188.40.156.186  # Replace with your actual server IP
+          username: root        # Replace with your username
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
@@ -55,4 +49,3 @@ jobs:
             npm install
             npm run build
             sudo systemctl restart nginx
-          
