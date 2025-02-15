@@ -1,0 +1,58 @@
+name: React CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+            # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' #
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the React app
+      - name: Build
+        run: npm run build
+      - name: Debug SSH Key
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}"
+      - name: deploy server
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: 188.40.156.186
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            echo "Starting deployment..."
+            cd /home/emp_front
+            git pull
+            echo "Loading nvm..."
+            source ~/.nvm/nvm.sh
+            nvm use 19
+            npm install
+            npm run build
+            sudo systemctl restart nginx
+          
