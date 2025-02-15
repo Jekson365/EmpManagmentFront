@@ -5,15 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Box, Snackbar, Stack, Typography } from "@mui/material";
 
 function Login() {
+  const isLogged = Cookies.get(".AspNetCore.Cookies");
+  
+    useEffect(() => {
+      if (isLogged) {
+        navigate("/");
+      }
+    }, []);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const isLogged = Cookies.get(".AspNetCore.Cookies");
-
-  useEffect(() => {
-    if (isLogged) {
-      navigate("/");
-    }
-  }, []);
   const [formData, setFormData] = useState({
     email: "",
     password: "",

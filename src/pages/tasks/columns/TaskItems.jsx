@@ -1,6 +1,4 @@
-import {
-  Add,
-} from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import UseTasks from "../../../hooks/tasks/UseTasks";
@@ -8,16 +6,38 @@ import { AssignTaskContext } from "../Tasks";
 import TaskStatus from "../../../components/task-statuses/TaskStatus";
 import AssignedTo from "../../../components/tasks/AssignedTo";
 import CurrentTask from "../current-task/CurrentTask";
+import UseCurrentTask from "../../../hooks/tasks/UseCurrentTask";
+import UseTaskStatuses from "../../../hooks/task-statuss/UseTaskStatuses";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import UseFilterTask from "../../../hooks/tasks/UseFilterTask";
 
 function TaskItems() {
   const { assignTask, setAssignTask } = useContext(AssignTaskContext);
+  const { taskStatuses, handleTaskStatuses } = UseTaskStatuses();
   const { tasks, loading, setTasks, handleTasks } = UseTasks();
   const [currentTaskId, setCurrentTaskId] = useState(null);
 
   useEffect(() => {
     handleTasks();
-  }, [assignTask]);
+  }, [assignTask, currentTaskId]);
 
+  useEffect(() => {
+    handleTaskStatuses();
+  }, []);
+
+  const handleUpdateStatus = (taskId, statusId, status) => {
+    setTasks((prevTasks) => {
+      prevTasks.map((task) => {
+        task.id === taskId
+          ? {
+              ...task,
+              statusId: statusId,
+              status: status,
+            }
+          : task;
+      });
+    });
+  };
   const updateTasks = (taskId, userId) => {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
@@ -42,62 +62,90 @@ function TaskItems() {
         <>
           {currentTaskId != null ? (
             <CurrentTask
+              handleUpdateStatus={handleUpdateStatus}
               taskId={currentTaskId}
               setCurrentTaskId={setCurrentTaskId}
-              
             />
           ) : null}
+          <Stack direction={"row"} gap={"30px"}>
+            {taskStatuses &&
+              taskStatuses.map((e) => {
+                return (
+                  <>
+                    <Stack
+                      className="status-item"
+                      gap={"5px"}
+                      direction={"row"}
+                      onClick={() => handleTaskFilter(e.id)}
+                    >
+                      <div
+                        className={`active-status-item task-background-status-${e.id}`}
+                      ></div>
+                      <RadioButtonCheckedIcon
+                        className={`task-status-${e.id}`}
+                      />
+                      <Typography>{e.name}</Typography>
+                    </Stack>
+                  </>
+                );
+              })}
+          </Stack>
           <Grid
+            mt={2}
             className="task-item-container"
             container
             columnSpacing={5}
             rowSpacing={2}
             pr={5}
           >
-            {tasks.map((task) => {
-              return (
-                <>
-                  <Grid item xs={3}>
-                    <Box className="task-item" width={"100%"}>
-                      <TaskStatus params={task} />
-                      <Stack direction={"column"} alignItems={"flex-start"}>
-                        <Typography
-                          onClick={() => setCurrentTaskId(task.id)}
-                          variant="h4"
-                          className="c-white title"
-                        >
-                          {task.title}
-                        </Typography>
-                      </Stack>
-                      <Stack direction={"row"} gap={"3px"}>
-                        {task.assignedUsers.map((emp) => {
-                          return (
-                            <>
-                              <AssignedTo
-                                emp={emp}
-                                taskId={task.id}
-                                updateTasks={updateTasks}
-                              />
-                            </>
-                          );
-                        })}
-                        <div
-                          className="assigned-to icon"
-                          style={{
-                            border: "0",
-                          }}
-                          onClick={() =>
-                            setAssignTask({ ...assignTask, taskId: task.id })
-                          }
-                        >
-                          <Add />
-                        </div>
-                      </Stack>
-                    </Box>
-                  </Grid>
-                </>
-              );
-            })}
+            {tasks &&
+              tasks.map((task) => {
+                return (
+                  <>
+                    <Grid item xs={3}>
+                      <Box
+                        className={`task-item task-background-status-${task.statusId}`}
+                        width={"100%"}
+                      >
+                        {/* <TaskStatus params={task} /> */}
+                        <Stack direction={"column"} alignItems={"flex-start"}>
+                          <Typography
+                            onClick={() => setCurrentTaskId(task.id)}
+                            variant="h4"
+                            className="c-white title"
+                          >
+                            {task.title}
+                          </Typography>
+                        </Stack>
+                        <Stack direction={"row"} gap={"3px"}>
+                          {task.assignedUsers.map((emp) => {
+                            return (
+                              <>
+                                <AssignedTo
+                                  emp={emp}
+                                  taskId={task.id}
+                                  updateTasks={updateTasks}
+                                />
+                              </>
+                            );
+                          })}
+                          <div
+                            className="assigned-to icon"
+                            style={{
+                              border: "0",
+                            }}
+                            onClick={() =>
+                              setAssignTask({ ...assignTask, taskId: task.id })
+                            }
+                          >
+                            <Add />
+                          </div>
+                        </Stack>
+                      </Box>
+                    </Grid>
+                  </>
+                );
+              })}
           </Grid>
         </>
       )}

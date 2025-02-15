@@ -3,16 +3,25 @@ import UseTaskStatuses from "../../hooks/task-statuss/UseTaskStatuses";
 import { Stack, Typography } from "@mui/material";
 import { API } from "../../api/Api";
 import UseUpdateTaskStatus from "../../hooks/task-statuss/UseUpdateTaskStatus";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
-function UpdateTaskStatus({ currentTaskId, _currentStatusId }) {
-  const [currentStatusId, setCurrentStatusId] = useState(null);
+function UpdateTaskStatus({
+  currentTaskId,
+  _currentStatusId,
+  _currentStatusName,
+}) {
+  const [currentStatusData, setCurrentStatusData] = useState({
+    statusId: "",
+    statusName: "",
+  });
   const [statusesOn, setStatusesOn] = useState(false);
   const { taskStatuses, loading, handleTaskStatuses } = UseTaskStatuses();
   const { result, loadingResponse, handleUpdateTaskStatus } =
     UseUpdateTaskStatus();
 
-  const handleStatusChange = async (statuId, taskId) => {
-    setCurrentStatusId(statuId);
+  const handleStatusChange = async (statuId, taskId, stName) => {
+    // setCurrentStatusId(statuId);
+    setCurrentStatusData({ statusId: statuId, statusName: stName });
     await handleUpdateTaskStatus(taskId, statuId);
   };
   useEffect(() => {
@@ -27,16 +36,19 @@ function UpdateTaskStatus({ currentTaskId, _currentStatusId }) {
         <div className="select-bar">
           <div className="status-bar-element">
             <Stack
-              p={1}
               direction={"row"}
               gap={"10px"}
-              alignItems={"flex-start"}
+              // justifyContent={'center'}
+              alignItems={"center"}
+              pl={1}
               onClick={() => setStatusesOn(!statusesOn)}
             >
-              <div
-                className={`task-status-element task-status-${currentStatusId || _currentStatusId}`}
-              ></div>
-              <Typography style={{ fontSize: "13px" }}>დასრულებული</Typography>
+              <RadioButtonCheckedIcon
+                className={`task-status-element task-status-${currentStatusData.statusId || _currentStatusId}`}
+              />
+              <Typography style={{ fontSize: "13px" }}>
+                {currentStatusData.statusName || _currentStatusName}
+              </Typography>
             </Stack>
           </div>
         </div>
@@ -53,7 +65,9 @@ function UpdateTaskStatus({ currentTaskId, _currentStatusId }) {
                 <>
                   <div
                     className="status-bar-element"
-                    onClick={() => handleStatusChange(ts.id, currentTaskId)}
+                    onClick={() =>
+                      handleStatusChange(ts.id, currentTaskId, ts.name)
+                    }
                   >
                     <Stack
                       p={1}
@@ -61,9 +75,9 @@ function UpdateTaskStatus({ currentTaskId, _currentStatusId }) {
                       gap={"10px"}
                       alignItems={"flex-start"}
                     >
-                      <div
+                      <RadioButtonCheckedIcon
                         className={`task-status-element task-status-${ts.id}`}
-                      ></div>
+                      />
                       <Typography style={{ fontSize: "13px" }}>
                         {ts.name}
                       </Typography>

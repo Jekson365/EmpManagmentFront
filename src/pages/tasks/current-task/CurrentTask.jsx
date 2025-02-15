@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UseCurrentTask from "../../../hooks/tasks/UseCurrentTask";
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import UseTaskStatuses from "../../../hooks/task-statuss/UseTaskStatuses";
 import UpdateTaskStatus from "../../../components/task-statuses/UpdateTaskStatus";
+import { CurrentUserContext } from "../../../App";
 
-function CurrentTask({ taskId, setCurrentTaskId }) {
+function CurrentTask({ taskId, setCurrentTaskId, handleUpdateStatus }) {
   const { result, loading, handleCurrentTask } = UseCurrentTask();
+  const { page, setPage } = useContext(CurrentUserContext);
   const arr = [1, 2, 3, 4, 5, 6];
 
-  const handleReload = () => {
+  const handleReload = (taskId, statusId, status) => {
     setCurrentTaskId(null);
-    window.location.reload();
+    handleUpdateStatus(taskId, statusId, status);
   };
   useEffect(() => {
     if (taskId) {
@@ -29,7 +31,12 @@ function CurrentTask({ taskId, setCurrentTaskId }) {
             <div className="current-task-container">
               <Stack direction={"row"} justifyContent={"space-between"}>
                 <Box></Box>
-                <Box className="close-icon-button" onClick={handleReload}>
+                <Box
+                  className="close-icon-button"
+                  onClick={() =>
+                    handleReload(result.id, result.statusId, result.status)
+                  }
+                >
                   <CloseIcon />
                 </Box>
               </Stack>
@@ -37,6 +44,7 @@ function CurrentTask({ taskId, setCurrentTaskId }) {
                 <Grid item xs={8}>
                   <Stack direction={"column"} gap={"10px"}>
                     <UpdateTaskStatus
+                      _currentStatusName={result.status}
                       currentTaskId={result.id}
                       _currentStatusId={result.statusId}
                     />

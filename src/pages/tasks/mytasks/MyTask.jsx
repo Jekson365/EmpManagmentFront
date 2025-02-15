@@ -23,8 +23,8 @@ const ResizableColumn = ({ children, width, onResize }) => {
 function MyTask() {
   const { tasks, loading, handleTasks } = UseTasks();
   const [columns, setColumns] = useState([
-    { key: "title", label: "დასახელება", width: 500 },
     { key: "status", label: "სტატუსი", width: 500 },
+    { key: "title", label: "დასახელება", width: 500 },
     { key: "assigned_to", label: "მიმაგრებულია", width: 400 },
   ]);
 
@@ -67,10 +67,10 @@ function MyTask() {
             return (
               <>
                 <tr height="50px">
-                  <td>{task.title}</td>
                   <td>
                     <TaskStatus params={task} />
                   </td>
+                  <td>{task.title}</td>
                   <td>
                     <Stack direction={"row"} gap={"3px"}>
                       {task.assignedUsers.map((emp) => {

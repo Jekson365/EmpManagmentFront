@@ -50,17 +50,34 @@ body {
   }
 }
 .task-status-1 {
-  background-color: #578fca;
+  color: $status-color-1;
 }
 .task-status-2 {
-  background-color: #3d8d7a;
+  color: $status-color-2;
 }
 .task-status-3 {
-  background-color: #e52020;
+  color: $status-color-3;
 }
 .task-status-4 {
-  background-color: yellow;
+  color: $status-color-4;
 }
+
+.task-background-status-1 {
+  background-color: $status-color-1;
+}
+
+.task-background-status-2 {
+  background-color: $status-color-2;
+}
+
+.task-background-status-3 {
+  background-color: $status-color-3;
+}
+
+.task-background-status-4 {
+  background-color: $status-color-4;
+}
+
 .active-color-light {
   color: white !important;
 }

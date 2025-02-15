@@ -18,7 +18,7 @@ function Header() {
         </Box>
         <Box>
           <div
-            className="icon"
+            className="header-icon"
             style={{
               backgroundImage: `url('${import.meta.env.VITE_API_URL}/uploads/${user.iconPath}')`,
             }}
