@@ -5,89 +5,119 @@ import UseTasks from "../../../hooks/tasks/UseTasks";
 import AssignedTo from "../../../components/tasks/AssignedTo";
 import { Stack } from "@mui/system";
 import TaskStatus from "../../../components/task-statuses/TaskStatus";
-
-const ResizableColumn = ({ children, width, onResize }) => {
-  return (
-    <ResizableBox
-      width={width}
-      height={10}
-      axis="x"
-      resizeHandles={["e"]}
-      onResizeStop={(e, { size }) => onResize(size.width)}
-    >
-      <div style={{ width: "100%", overflow: "hidden" }}>{children}</div>
-    </ResizableBox>
-  );
-};
-
+import { Table } from "flowbite-react";
+import { DataGrid } from "@mui/x-data-grid";
+import Paper from "@mui/material/Paper";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import { Typography } from "@mui/material";
 function MyTask() {
+  const columns = [
+    {
+      field: "სტატუსი",
+      title: "სტატუსი",
+      sortable: false,
+      width: 250,
+      renderCell: (params) => {
+        return (
+          <>
+            <TaskStatus params={params.row} />
+          </>
+        );
+      },
+    },
+    {
+      field: "დასახელება",
+      sortable: false,
+      title: "დასახელება",
+      width: 250,
+      renderCell: (params) => {
+        return (
+          <>
+            <Typography>{params.row.title}</Typography>
+          </>
+        );
+      },
+    },
+    {
+      field: "აღწერა",
+      sortable: false,
+      title: "აღწერა",
+      width: 250,
+      renderCell: (params) => {
+        return (
+          <>
+            <Typography>{params.row.description}</Typography>
+          </>
+        );
+      },
+    },
+    {
+      field: "მიმაგრებულია",
+      sortable: false,
+      title: "მიმაგრებულია",
+      width: 250,
+      renderCell: (params) => (
+        <Stack direction="row" spacing={1}>
+          {params.row.assignedUsers?.map((user) => (
+            <AssignedTo key={user.id} emp={user} taskId={params.row.id} />
+          )) || "No Assignee"}
+        </Stack>
+      ),
+    },
+    {
+      field: "შექმნის თარიღი",
+      sortable: false,
+      title: "შექმნის თარიღი",
+      width: 250,
+      renderCell: (params) => (
+        <Typography>
+          {new Date(params.row.createdAt).toLocaleString()}
+        </Typography>
+      ),
+    },
+    {
+      field: "დასრულების თარიღი",
+      sortable: false,
+      title: "დასრულების თარიღი",
+      width: 250,
+      renderCell: (params) => (
+        <Typography>
+          {new Date(params.row.endDate).toLocaleString()}
+        </Typography>
+      ),
+    },
+  ];
   const { tasks, loading, handleTasks } = UseTasks();
-  const [columns, setColumns] = useState([
-    { key: "status", label: "სტატუსი", width: 500 },
-    { key: "title", label: "დასახელება", width: 500 },
-    { key: "assigned_to", label: "მიმაგრებულია", width: 400 },
-  ]);
 
   useEffect(() => {
     handleTasks();
   }, [tasks]);
 
-  const handleResize = (index, newWidth) => {
-    const newColumns = [...columns];
-    newColumns[index].width = newWidth;
-    setColumns(newColumns);
-  };
+  const paginationModel = { page: 0, pageSize: 40 };
 
   return (
-    <table style={{ width: "100%", borderCollapse: "collapse" }}>
-      <thead>
-        <tr>
-          {columns.map((col, index) => (
-            <th
-              key={col.key}
-              style={{
-                width: col.width,
-                border: "1px solid #ddd",
-                padding: "8px",
-              }}
-            >
-              <ResizableColumn
-                width={col.width}
-                onResize={(newWidth) => handleResize(index, newWidth)}
-              >
-                {col.label}
-              </ResizableColumn>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {tasks &&
-          tasks.map((task) => {
-            return (
-              <>
-                <tr height="50px">
-                  <td>
-                    <TaskStatus params={task} />
-                  </td>
-                  <td>{task.title}</td>
-                  <td>
-                    <Stack direction={"row"} gap={"3px"}>
-                      {task.assignedUsers.map((emp) => {
-                        return (
-                          <>
-                            <AssignedTo emp={emp} taskId={task.id} />
-                          </>
-                        );
-                      })}
-                    </Stack>
-                  </td>
-                </tr>
-              </>
-            );
-          })}
-      </tbody>
-    </table>
+    <>
+      <Paper sx={{ height: "100vh", width: "100%" }}>
+        <DataGrid
+          rows={tasks}
+          columns={columns}
+          sortable={false}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          sx={{
+            border: 0,
+            "& .MuiDataGrid-cell": {
+              display: "flex",
+              alignItems: "center",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              alignItems: "center",
+              textAlign: "center",
+            },
+          }}
+        />
+      </Paper>
+    </>
   );
 }
 

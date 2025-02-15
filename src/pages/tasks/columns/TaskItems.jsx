@@ -108,7 +108,7 @@ function TaskItems() {
                         width={"100%"}
                       >
                         {/* <TaskStatus params={task} /> */}
-                        <Stack direction={"column"} alignItems={"flex-start"}>
+                        <Stack direction={"column"} gap={'5px'} alignItems={"flex-start"}>
                           <Typography
                             onClick={() => setCurrentTaskId(task.id)}
                             variant="h4"
@@ -116,6 +116,7 @@ function TaskItems() {
                           >
                             {task.title}
                           </Typography>
+                          <Typography color="white">{new Date(task.createdAt).toLocaleString()}</Typography>
                         </Stack>
                         <Stack direction={"row"} gap={"3px"}>
                           {task.assignedUsers.map((emp) => {

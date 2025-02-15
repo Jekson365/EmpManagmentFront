@@ -10,8 +10,8 @@ function NewTask() {
   const { result, handleTaskAdd } = UseNewTask();
   const handleSubmit = async () => {
     setError("");
-    if (newTask.title == "" || newTask.description == "") {
-      setError("დასახელება და აღწერის ველი არ შეიძლება იყოს ცარიელი");
+    if (newTask.title == "" || newTask.description == "" || newTask.endDate == '') {
+      setError("ველი არ შეიძლება იყოს ცარიელი");
       return 0;
     }
     try {
@@ -24,7 +24,7 @@ function NewTask() {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <input
             type="text"
             name="title"
@@ -32,6 +32,16 @@ function NewTask() {
             className="register-form"
             style={{ width: "100%" }}
             placeholder="დასახელება"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <input
+            type="datetime-local"
+            name="endDate"
+            onChange={(e) => setNewTask({ ...newTask, endDate: e.target.value })}
+            className="register-form"
+            style={{ width: "100%" }}
+            placeholder="დასრულების თარიღი"
           />
         </Grid>
         <Grid item xs={12}>
