@@ -6,31 +6,39 @@ import UseTaskStatuses from "../../../hooks/task-statuss/UseTaskStatuses";
 import UpdateTaskStatus from "../../../components/task-statuses/UpdateTaskStatus";
 import { CurrentUserContext } from "../../../App";
 import UseUpdateDueDate from "../../../hooks/tasks/UseUpdateDueDate";
+import TaskCommnets from "./TaskCommnets";
+import CreateComment from "./CreateComment";
 
 function CurrentTask({ taskId, setCurrentTaskId, handleUpdateStatus }) {
   const { result, loading, handleCurrentTask } = UseCurrentTask();
   const { handleDueDateUpdate } = UseUpdateDueDate();
   const [dueDate, setDueDate] = useState("");
-  const { page, setPage } = useContext(CurrentUserContext);
-  const arr = [1, 2, 3, 4, 5, 6];
+  const [comments, setComments] = useState();
+  const { user, page, setPage } = useContext(CurrentUserContext);
 
   const handleReload = (taskId, statusId, status) => {
     setCurrentTaskId(null);
     handleUpdateStatus(taskId, statusId, status);
   };
+
+  const addCommentToState = (newComment) => {
+    setComments((prevComments) => [...prevComments, newComment]);
+  };
+
   useEffect(() => {
     if (taskId) {
       handleCurrentTask(taskId);
     }
   }, [taskId]);
 
+  useEffect(() => {
+    setComments(result?.comments);
+  }, [result]);
   const handleDueDate = async (e) => {
     const value = e.target.value;
     if (!value) return;
 
     const converted = new Date(value).toISOString();
-    console.log(converted);
-    console.log(taskId);
     try {
       await handleDueDateUpdate({ taskId, endDate: converted });
       setDueDate(value);
@@ -95,35 +103,15 @@ function CurrentTask({ taskId, setCurrentTaskId, handleUpdateStatus }) {
                   <Stack
                     direction={"column"}
                     alignItems={"flex-start"}
+                    justifyContent={"space-between"}
                     gap={"10px"}
                   >
-                    <Stack
-                      direction={"column"}
-                      justifyContent={"space-between"}
-                      alignItems="flex-start"
-                      width={"100%"}
-                      gap={"20px"}
-                      className="comments"
-                    >
-                      {arr.map((e) => {
-                        return (
-                          <>
-                            <div className="comment-box">
-                              <Typography m={2}>კომენტარი...</Typography>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </Stack>
-                    <Stack
-                      className="make-comment"
-                      direction={"row"}
-                      justifyContent={"space-between"}
-                      gap={"10px"}
-                    >
-                      <input type="text" style={{ width: "100%" }} />
-                      <button>გაგზავნა</button>
-                    </Stack>
+                    <TaskCommnets comments={comments} />
+                    <CreateComment
+                      userId={user.id}
+                      taskId={result.id}
+                      addCommentToState={addCommentToState}
+                    />
                   </Stack>
                 </Grid>
               </Grid>
