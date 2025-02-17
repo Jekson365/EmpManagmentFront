@@ -15,6 +15,7 @@ import MyTask from "./pages/tasks/mytasks/MyTask";
 import NewTask from "./pages/tasks/newtasks/NewTask";
 import { useContext } from "react";
 import { CurrentUserContext } from "./App";
+import DashboardLayout from "./pages/dashboard/DashboardLayout";
 export const navigationParams = [
   {
     id: 1,
@@ -22,7 +23,7 @@ export const navigationParams = [
     icon: <Dashboard className="color-light" />,
     needSuperAdmin: false,
     items: [],
-    element: null,
+    element: <DashboardLayout />,
   },
   {
     id: 2,

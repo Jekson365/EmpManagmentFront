@@ -1,0 +1,32 @@
+@import "./config.scss";
+
+.user-task-item-cover {
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  .user-task-items {
+    .task-item {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      border-radius: 5px;
+      .title {
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.note-item-cover {
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  .comment {
+    height: 100px;
+    border-radius: 5px;
+    background-color: $color-secondary-green;
+  }
+}

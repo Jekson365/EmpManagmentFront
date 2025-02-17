@@ -5,11 +5,12 @@
   font-size: 15px;
 }
 .task-item-container {
-  // height: 800px;
-
+  height: 80vh;
   overflow-y: auto;
-  align-items: flex-start;
   display: flex;
+  // justify-content: flex-start; /* Align items at the top */
+  // align-items: flex-start; /* Prevent stretching and align items to the start */
+
   &::-webkit-scrollbar {
     width: 0px;
   }
@@ -165,6 +166,8 @@
   }
 }
 .status-container {
+  z-index: 100;
+  background-color: white;
   height: 40px;
   .select-bar {
     width: 200px;
