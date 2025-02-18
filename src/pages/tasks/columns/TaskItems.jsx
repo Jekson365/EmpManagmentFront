@@ -68,8 +68,8 @@ function TaskItems() {
 
   const handleRemoveFilter = () => {
     localStorage.setItem("filterStatusId", JSON.stringify(null));
-    handleTasks(null)
-  }
+    handleTasks(null);
+  };
   return (
     <>
       {loading ? (
@@ -113,85 +113,80 @@ function TaskItems() {
               </div>
             </div>
           </Stack>
-          <Grid
-            mt={2}
-            className="task-item-container"
-            container
-            columnSpacing={5}
-            rowSpacing={2}
-            pr={5}
-          >
-            {tasks &&
-              tasks.map((task) => {
-                return (
-                  <>
-                    <Grid item xs={12} sm={6} lg={3}>
-                      <Box
-                        className={`task-item task-background-status-${task.statusId}`}
-                        width={"100%"}
-                      >
-                        {/* <TaskStatus params={task} /> */}
-                        <Stack
-                          direction={"column"}
-                          gap={"5px"}
-                          alignItems={"flex-start"}
+          <Box className="task-item-container">
+            <Grid mt={2} container columnSpacing={5} rowSpacing={2} pr={5}>
+              {tasks &&
+                tasks.map((task) => {
+                  return (
+                    <>
+                      <Grid item xs={12} sm={6} lg={3}>
+                        <Box
+                          className={`task-item task-background-status-${task.statusId}`}
+                          width={"100%"}
                         >
-                          <Typography
-                            onClick={() => setCurrentTaskId(task.id)}
-                            variant="h6"
-                            fontWeight={"bold"}
-                            className="c-white"
+                          {/* <TaskStatus params={task} /> */}
+                          <Stack
+                            direction={"column"}
+                            gap={"5px"}
+                            alignItems={"flex-start"}
                           >
-                            {task.title}
-                          </Typography>
-                          <Typography color="white">
-                            {new Date(task.endDate).toLocaleString()}
-                          </Typography>
-                        </Stack>
-                        <Stack
-                          direction={"row"}
-                          alignItems={"center"}
-                          gap={"3px"}
-                        >
-                          {task.assignedUsers.slice(0, 3).map((emp) => {
-                            return (
+                            <Typography
+                              onClick={() => setCurrentTaskId(task.id)}
+                              variant="h6"
+                              fontWeight={"bold"}
+                              className="c-white"
+                            >
+                              {task.title}
+                            </Typography>
+                            <Typography color="white">
+                              {new Date(task.endDate).toLocaleString()}
+                            </Typography>
+                          </Stack>
+                          <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            gap={"3px"}
+                          >
+                            {task.assignedUsers.slice(0, 3).map((emp) => {
+                              return (
+                                <>
+                                  <AssignedTo
+                                    emp={emp}
+                                    taskId={task.id}
+                                    updateTasks={updateTasks}
+                                  />
+                                </>
+                              );
+                            })}
+                            {task.assignedUsers.length > 3 ? (
                               <>
-                                <AssignedTo
-                                  emp={emp}
-                                  taskId={task.id}
-                                  updateTasks={updateTasks}
-                                />
+                                <div
+                                  className="assigned-to"
+                                  style={{
+                                    backgroundColor: "rgba(255,255,255,0.3)",
+                                  }}
+                                >
+                                  +{task.assignedUsers.length - 3}
+                                </div>
                               </>
-                            );
-                          })}
-                          {task.assignedUsers.length > 3 ? (
-                            <>
-                              <div
-                                className="assigned-to"
-                                style={{
-                                  backgroundColor: "rgba(255,255,255,0.3)",
-                                }}
-                              >
-                                +{task.assignedUsers.length - 3}
-                              </div>
-                            </>
-                          ) : null}
-                          <div
-                            className="assigned-to icon"
-                            style={{
-                              border: "0",
-                            }}
-                            onClick={() => handleTaskAssign(task.id)}
-                          >
-                            <Add />
-                          </div>
-                        </Stack>
-                      </Box>
-                    </Grid>
-                  </>
-                );
-              })}
-          </Grid>
+                            ) : null}
+                            <div
+                              className="assigned-to icon"
+                              style={{
+                                border: "0",
+                              }}
+                              onClick={() => handleTaskAssign(task.id)}
+                            >
+                              <Add />
+                            </div>
+                          </Stack>
+                        </Box>
+                      </Grid>
+                    </>
+                  );
+                })}
+            </Grid>
+          </Box>
         </>
       )}
     </>

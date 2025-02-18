@@ -8,8 +8,8 @@
   height: 80vh;
   overflow-y: auto;
   display: flex;
-  // justify-content: flex-start; /* Align items at the top */
-  // align-items: flex-start; /* Prevent stretching and align items to the start */
+  justify-content: flex-start; /* Align items at the top */
+  align-items: flex-start; /* Prevent stretching and align items to the start */
 
   &::-webkit-scrollbar {
     width: 0px;
