@@ -1,15 +1,39 @@
 @import "./config.scss";
 
-.datetime-input {
-  padding: 10px 5px;
-  font-size: 15px;
+.datetime-cover {
+  padding: 0 10px;
+  position: relative;
+  background-color: rgb(245, 245, 245);
+  &:hover {
+    background-color: rgb(240, 240, 240);
+  }
+  .abs {
+    position: absolute;
+    right: 10px;
+    z-index: 90;
+  }
+  .datetime-input {
+    cursor: pointer;
+    height: 10px;
+    border: 0;
+    padding: 15px 0px;
+    font-weight: bold;
+    font-size: 15px;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+  }
+}
+.deadline-title {
+  color: rgb(255, 93, 93);
+  font-weight: bold !important;
 }
 .task-item-container {
   height: 80vh;
   overflow-y: auto;
   display: flex;
-  justify-content: flex-start; /* Align items at the top */
-  align-items: flex-start; /* Prevent stretching and align items to the start */
+  justify-content: flex-start;
+  align-items: flex-start;
 
   &::-webkit-scrollbar {
     width: 0px;
@@ -199,6 +223,7 @@
   }
   .comment-box {
     width: 100%;
+    overflow: hidden;
     border-radius: 5px;
     min-height: 100px;
     background-color: rgba(0, 0, 0, 0.04);

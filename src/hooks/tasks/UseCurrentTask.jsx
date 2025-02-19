@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { API } from "../../api/Api";
 
 function UseCurrentTask() {
-  const [result, setResult] = useState(null);
+  const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
   const handleCurrentTask = (userId) => {
     API.get(`api/task/${userId}`)
       .then((res) => {
-        setResult(res.data);
+        setTask(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -15,7 +15,7 @@ function UseCurrentTask() {
         throw err;
       });
   };
-  return { result, loading, handleCurrentTask };
+  return { task, loading, handleCurrentTask };
 }
 
 export default UseCurrentTask;
