@@ -18,8 +18,8 @@ function CreateComment({ userId, taskId }) {
     setLoading(false);
 
     if (newComment) {
-      setComments((prev) => [...prev, newComment]); // Optimistically update UI
-      setContent(""); // Clear input after submitting
+      setComments((prev) => [...prev, newComment]);
+      setContent("");
     }
   };
 

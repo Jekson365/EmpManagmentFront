@@ -3,7 +3,7 @@ import { API } from "../../api/Api";
 
 function UseTaskComment() {
   const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
 
   const handleUserComments = async (taskId) => {
     try {

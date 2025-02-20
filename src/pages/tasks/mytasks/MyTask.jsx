@@ -91,7 +91,7 @@ function MyTask() {
 
   useEffect(() => {
     handleTasks();
-  }, [tasks]);
+  }, []);
 
   const paginationModel = { page: 2, pageSize: 5 };
 

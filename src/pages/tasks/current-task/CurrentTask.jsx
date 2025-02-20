@@ -105,8 +105,7 @@ function CurrentTask({ taskId, setCurrentTaskId }) {
                         justifyContent={"space-between"}
                         gap={"10px"}
                       >
-                        <TaskCommnets taskId={task.id} />
-                        <CreateComment userId={user.id} taskId={task.id} />
+                        <TaskCommnets taskId={task.id} userId={user.id} />
                       </Stack>
                     </Grid>
                   </Grid>

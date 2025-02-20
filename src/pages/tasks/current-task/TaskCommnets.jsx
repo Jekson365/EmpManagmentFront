@@ -1,20 +1,34 @@
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import UseTaskComment from "../../../hooks/comments/UseTaskComment";
+import UseCreateComment from "../../comments/UseCreateComment";
 
-function TaskCommnets({ taskId }) {
+function TaskCommnets({ taskId, userId }) {
+  const [content, setContent] = useState("");
+  const [commented, setCommented] = useState(false);
+  const { setLoading, handleCommentCreate } = UseCreateComment();
   const { comments, loading, handleUserComments } = UseTaskComment();
+
   useEffect(() => {
     if (taskId) {
       handleUserComments(taskId);
     }
+  }, [taskId, commented]);
 
-    const interval = setInterval(() => {
-      handleUserComments(taskId);
-    }, 5000);
+  const handleSubmit = async () => {
+    setCommented(false);
+    if (!content.trim()) return;
 
-    return () => clearInterval(interval);
-  }, [taskId]);
+    setLoading(true);
+    const newComment = await handleCommentCreate({ userId, taskId, content });
+    setLoading(false);
+    setCommented(true);
+
+    if (newComment) {
+      setComments((prev) => [...prev, newComment]);
+      setContent("");
+    }
+  };
 
   return (
     <>
@@ -100,6 +114,21 @@ function TaskCommnets({ taskId }) {
               })}
             </Stack>
           </Box>
+          <Stack
+            className="make-comment"
+            direction={"row"}
+            justifyContent={"space-between"}
+            gap={"10px"}
+          >
+            <input
+              type="text"
+              onChange={(e) => setContent(e.target.value)}
+              style={{ width: "100%" }}
+            />
+            <button onClick={handleSubmit} style={{ cursor: "pointer" }}>
+              გაგზავნა
+            </button>
+          </Stack>
         </>
       )}
     </>
