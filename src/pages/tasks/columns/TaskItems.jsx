@@ -2,7 +2,7 @@ import { Add } from "@mui/icons-material";
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import UseTasks from "../../../hooks/tasks/UseTasks";
-import { AssignTaskContext } from "../Tasks";
+import { AssignTaskContext, TaskItemContext } from "../Tasks";
 import TaskStatus from "../../../components/task-statuses/TaskStatus";
 import AssignedTo from "../../../components/tasks/AssignedTo";
 import CurrentTask from "../current-task/CurrentTask";
@@ -12,78 +12,40 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import UseFilterTask from "../../../hooks/tasks/UseFilterTask";
 import CloseIcon from "@mui/icons-material/Close";
 function TaskItems() {
+  const [currentTaskId, setCurrentTaskId] = useState({});
+  const { tasks, taskStatus, setTaskStatus, setTasks } =
+    useContext(TaskItemContext);
   const { assignTask, setAssignTask } = useContext(AssignTaskContext);
+  const { handleTasks } = useContext(TaskItemContext);
   const { taskStatuses, handleTaskStatuses } = UseTaskStatuses();
-  const { tasks, loading, setTasks, handleTasks } = UseTasks();
-  const [currentTaskId, setCurrentTaskId] = useState(null);
-  const [selectedStatusId, setSelectedStatusId] = useState(
-    JSON.parse(localStorage.getItem("filterStatusId"))
-  );
 
-  useEffect(() => {
-    handleTasks(selectedStatusId);
-  }, [currentTaskId]);
-
+  const filterTaskItems = (statusId) => {
+    setTaskStatus(statusId);
+  };
+  const handleRemoveFilter = () => {
+    handleTasks(null);
+  };
+  const handleTaskAssign = (taskId) => {
+    setAssignTask({ ...assignTask, taskId: taskId });
+  };
   useEffect(() => {
     handleTaskStatuses();
   }, []);
-
-  const handleUpdateStatus = (taskId, statusId, status) => {
-    setTasks((prevTasks) => {
-      prevTasks.map((task) => {
-        task.id === taskId
-          ? {
-              ...task,
-              statusId: statusId,
-              status: status,
-            }
-          : task;
-      });
-    });
-  };
-  const updateTasks = (taskId, userId) => {
-    handleTasks(selectedStatusId);
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId
-          ? {
-              ...task,
-              assignedUsers: task.assignedUsers.filter(
-                (emp) => emp.id !== userId
-              ),
-            }
-          : task
-      )
-    );
-  };
-
-  const handleTaskAssign = (tasKId) => {
-    setAssignTask({ ...assignTask, taskId: tasKId });
-  };
-
-  const handleTaskFilter = async (statusId) => {
-    localStorage.setItem("filterStatusId", JSON.stringify(statusId));
-    handleTasks(statusId);
-  };
-
-  const handleRemoveFilter = () => {
-    localStorage.setItem("filterStatusId", JSON.stringify(null));
-    handleTasks(null);
-  };
   return (
     <>
-      {loading ? (
+      {1 == 2 ? (
         <>
           <CircularProgress />
         </>
       ) : (
         <>
           {currentTaskId != null ? (
-            <CurrentTask
-              handleUpdateStatus={handleUpdateStatus}
-              taskId={currentTaskId}
-              setCurrentTaskId={setCurrentTaskId}
-            />
+            <>
+              <CurrentTask
+                taskId={currentTaskId}
+                setCurrentTaskId={setCurrentTaskId}
+              />
+            </>
           ) : null}
           <Stack alignItems={"center"} direction={"row"} gap={"30px"}>
             {taskStatuses &&
@@ -94,7 +56,7 @@ function TaskItems() {
                       className="status-item"
                       gap={"5px"}
                       direction={"row"}
-                      onClick={() => handleTaskFilter(e.id)}
+                      onClick={() => filterTaskItems(e.id)}
                     >
                       <div
                         className={`active-status-item task-background-status-${e.id}`}
@@ -124,7 +86,6 @@ function TaskItems() {
                           className={`task-item task-background-status-${task.statusId}`}
                           width={"100%"}
                         >
-                          {/* <TaskStatus params={task} /> */}
                           <Stack
                             direction={"column"}
                             gap={"5px"}
@@ -153,7 +114,7 @@ function TaskItems() {
                                   <AssignedTo
                                     emp={emp}
                                     taskId={task.id}
-                                    updateTasks={updateTasks}
+                                    setTasks={setTasks}
                                   />
                                 </>
                               );

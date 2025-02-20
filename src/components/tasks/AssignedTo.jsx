@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import UseRemoveAssignedTask from "../../hooks/tasks/UseRemoveAssignedTask";
 import CloseIcon from "@mui/icons-material/Close";
 import { Stack, Typography } from "@mui/material";
+import { TaskItemContext } from "../../pages/tasks/Tasks";
 
-function AssignedTo({ emp, taskId, updateTasks }) {
-  const { result, handleRemoveAssigned } = UseRemoveAssignedTask();
+function AssignedTo({ emp, taskId, setTasks }) {
+  const { handleRemoveAssigned } = UseRemoveAssignedTask();
   const removeEmployee = async () => {
     await handleRemoveAssigned({ userId: emp.id, taskId });
-    updateTasks(taskId, emp.id);
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              assignedUsers: task.assignedUsers.filter(
+                (user) => user.id !== emp.id
+              ),
+            }
+          : task
+      )
+    );
   };
 
   return (
