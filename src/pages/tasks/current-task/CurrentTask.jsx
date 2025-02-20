@@ -94,8 +94,8 @@ function CurrentTask({ taskId, setCurrentTaskId }) {
                             />
                           </Stack>
                         </Stack>
-                        <Typography variant="h5">{task?.title}</Typography>
-                        <Typography pr={3}>{task.description}</Typography>
+                        <h5 variant="h5">{task?.title}</h5>
+                        <div pr={5} className="description">{task.description}</div>
                       </Stack>
                     </Grid>
                     <Grid item xs={4}>

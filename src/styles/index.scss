@@ -1,10 +1,10 @@
 @import "./config.scss";
-@import url("//cdn.web-fonts.ge/fonts/bpg-arial/css/bpg-arial.min.css");
+@import url("//cdn.web-fonts.ge/fonts/bpg-arial-caps/css/bpg-arial-caps.min.css");
 
 * {
   margin: 0;
   padding: 0;
-  font-family: "BPG Arial", sans-serif;
+  font-family: "BPG Arial Caps", sans-serif !important;
 }
 body {
   overflow: hidden;

@@ -93,7 +93,7 @@ function MyTask() {
     handleTasks();
   }, []);
 
-  const paginationModel = { page: 2, pageSize: 5 };
+  const paginationModel = { page: 1, pageSize: 20 };
 
   return (
     <>
@@ -101,9 +101,9 @@ function MyTask() {
         <DataGrid
           rows={tasks}
           columns={columns}
-          sortable={false}
+          sortable={true}
           initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[5, 20]}
           sx={{
             border: 0,
             "& .MuiDataGrid-cell": {
