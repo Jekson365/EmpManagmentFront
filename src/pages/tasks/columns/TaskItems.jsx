@@ -1,16 +1,13 @@
 import { Add } from "@mui/icons-material";
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
-import UseTasks from "../../../hooks/tasks/UseTasks";
 import { AssignTaskContext, TaskItemContext } from "../Tasks";
-import TaskStatus from "../../../components/task-statuses/TaskStatus";
 import AssignedTo from "../../../components/tasks/AssignedTo";
 import CurrentTask from "../current-task/CurrentTask";
-import UseCurrentTask from "../../../hooks/tasks/UseCurrentTask";
 import UseTaskStatuses from "../../../hooks/task-statuss/UseTaskStatuses";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import UseFilterTask from "../../../hooks/tasks/UseFilterTask";
 import CloseIcon from "@mui/icons-material/Close";
+
 function TaskItems() {
   const [currentTaskId, setCurrentTaskId] = useState({});
   const { tasks, taskStatus, setTaskStatus, setTasks } =
