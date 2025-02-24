@@ -6,12 +6,12 @@ import { Alert, Box, Snackbar, Stack, Typography } from "@mui/material";
 
 function Login() {
   const isLogged = Cookies.get(".AspNetCore.Cookies");
-  
-    useEffect(() => {
-      if (isLogged) {
-        navigate("/");
-      }
-    }, []);
+
+  useEffect(() => {
+    if (isLogged) {
+      navigate("/");
+    }
+  }, []);
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -66,7 +66,9 @@ function Login() {
             danger
           </Alert>
         </Snackbar>
-        <Alert>სატესტო იუზერი: email - em | password - 123</Alert>
+        <Alert>
+          სატესტო იუზერი: email - jeko.erg@gmail.com | password - 123
+        </Alert>
         <Stack
           className="login-form"
           width={"300px"}

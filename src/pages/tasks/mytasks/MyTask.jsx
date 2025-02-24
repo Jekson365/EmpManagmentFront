@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { ResizableBox } from "react-resizable";
+import React, { useEffect } from "react";
 import "react-resizable/css/styles.css";
 import UseTasks from "../../../hooks/tasks/UseTasks";
 import AssignedTo from "../../../components/tasks/AssignedTo";
 import { Stack } from "@mui/system";
 import TaskStatus from "../../../components/task-statuses/TaskStatus";
-import { Table } from "flowbite-react";
 import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
-import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import { Typography } from "@mui/material";
 function MyTask() {
   const columns = [
@@ -81,9 +78,7 @@ function MyTask() {
       title: "დასრულების თარიღი",
       width: 250,
       renderCell: (params) => (
-        <Typography>
-          {new Date(params.row.endDate).toLocaleString()}
-        </Typography>
+        <Typography>{new Date(params.row.endDate).toLocaleString()}</Typography>
       ),
     },
   ];
@@ -102,7 +97,6 @@ function MyTask() {
           rows={tasks}
           columns={columns}
           sortable={true}
-          initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 20]}
           sx={{
             border: 0,
