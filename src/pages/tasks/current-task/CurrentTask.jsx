@@ -78,9 +78,6 @@ function CurrentTask({ taskId, setCurrentTaskId }) {
                             gap={"5px"}
                             alignItems={"center"}
                           >
-                            {/* <Typography className="deadline-title"> */}
-                            {/* {dueDate || new Date(task.endDate).toLocaleString()} */}
-                            {/* </Typography> */}
                             <input
                               onChange={(e) => handleDueDate(e)}
                               type="datetime-local"
@@ -95,7 +92,9 @@ function CurrentTask({ taskId, setCurrentTaskId }) {
                           </Stack>
                         </Stack>
                         <h5 variant="h5">{task?.title}</h5>
-                        <div pr={5} className="description">{task.description}</div>
+                        <div pr={5} className="description">
+                          {task.description}
+                        </div>
                       </Stack>
                     </Grid>
                     <Grid item xs={4}>

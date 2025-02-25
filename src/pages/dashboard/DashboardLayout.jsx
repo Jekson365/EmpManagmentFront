@@ -13,9 +13,12 @@ import UseTasks from "../../hooks/tasks/UseTasks";
 import UseUserTasks from "../../hooks/dashboard/UseUserTasks";
 import { CurrentUserContext } from "../../App";
 import UseNoteByUser from "../../hooks/notes/UseNoteByUser";
+import CurrentTask from "../tasks/current-task/CurrentTask";
+import Profile from "./profile/Profile";
 
 function DashboardLayout() {
   const { result, loading, handleUserTasks } = UseUserTasks();
+  const [currentTaskId, setCurrentTaskUd] = useState({});
   const { notes, notesLoading, handleNotes } = UseNoteByUser();
   const { user } = useContext(CurrentUserContext);
 
@@ -25,69 +28,51 @@ function DashboardLayout() {
   }, []);
   return (
     <>
+      {currentTaskId != null ? (
+        <>
+          <CurrentTask
+            taskId={currentTaskId}
+            setCurrentTaskId={setCurrentTaskUd}
+          />
+        </>
+      ) : null}
       {loading ? (
         <CircularProgress />
       ) : (
         <>
-          <Grid container columnSpacing={1}>
-            <Grid item xs={9}>
-              <Typography variant="h6">ჩემი თასქები</Typography>
-              <Box
-                mt={1}
-                style={{
-                  height: "400px",
-                }}
-                className="user-task-item-cover"
-              >
-                <Stack
-                  direction={"column"}
-                  gap={"10px"}
-                  className="user-task-items"
-                >
-                  {result.map((e) => {
-                    return (
-                      <>
-                        <TaskItem className="task-item" params={e} />
-                      </>
-                    );
-                  })}
-                </Stack>
-              </Box>
+          <Grid container height={"90vh"} direction={"column"}>
+            <Grid item sx={{ flex: 1 }}>
+              <Profile />
             </Grid>
-            <Grid item xs={3}>
-              <Typography variant="h6">ნოუთები</Typography>
-              <Box className="note-item-cover" mt={1} height={"400px"}>
-                <Box height={"100%"}>
-                  {notesLoading ? (
-                    <CircularProgress />
-                  ) : (
-                    <>
-                      <Stack direction={"column"} gap={"5px"}>
-                        {notes &&
-                          notes.map((note) => {
-                            return (
-                              <>
-                                <Box className="comment">
-                                  <div
-                                    className="user-icon"
-                                    style={{
-                                      backgroundImage: `url('${import.meta.env.VITE_API_URL}/uploads/${note.iconPath}')`,
-                                    }}
-                                  ></div>
-                                  <div className="content">
-                                    <div className="content-cover">
-                                      {note.content}
-                                    </div>
-                                  </div>
-                                </Box>
-                              </>
-                            );
-                          })}
-                      </Stack>
-                    </>
-                  )}
-                </Box>
-              </Box>
+            <Grid item sx={{ flex: 1 }}>
+              <Grid container columnSpacing={1}>
+                <Grid item xs={12}>
+                  <Typography variant="h6">ჩემი თასქები</Typography>
+                  <Box
+                    mt={1}
+                    style={{
+                      height: "400px",
+                    }}
+                    className="user-task-item-cover"
+                  >
+                    <Stack
+                      direction={"column"}
+                      gap={"10px"}
+                      className="user-task-items"
+                    >
+                      {result.map((e) => {
+                        return (
+                          <>
+                            <div onClick={() => setCurrentTaskUd(e.id)}>
+                              <TaskItem cla-ssName="task-item" params={e} />
+                            </div>
+                          </>
+                        );
+                      })}
+                    </Stack>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </>

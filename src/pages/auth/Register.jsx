@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { API } from "../../api/Api";
 import { useNavigate } from "react-router-dom";
-import { Alert, Box, Button, Grid, Snackbar, Typography } from "@mui/material";
+import { Alert, Grid, Snackbar } from "@mui/material";
 import UseRegister from "../../hooks/users/UseRegister";
 
 function Register() {
@@ -18,6 +17,11 @@ function Register() {
     name: "",
     surname: "",
     age: "",
+    phone: "",
+    birthdate: "",
+    position: "",
+    trustedContact: "",
+    hiredDate: "",
     icon: null,
     password: "",
   });
@@ -35,6 +39,7 @@ function Register() {
       [name]: type === "file" ? files[0] : value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -44,89 +49,138 @@ function Register() {
       throw err;
     }
   };
+
   return (
     <>
       <form encType="multipart/form-data">
         <Grid container spacing={2}>
           <Grid item xs={4}>
+            <label>მეილი</label>
             <input
+              className="register-form"
               type="email"
               name="email"
-              className="register-form"
               style={{ width: "100%" }}
-              placeholder="მეილი"
               value={formData.email}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={4}>
+            <label>სახელი</label>
             <input
+              className="register-form"
               type="text"
               name="name"
-              className="register-form"
               style={{ width: "100%" }}
-              placeholder="სახელი"
-              value={formData.firstName}
+              value={formData.name}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={4}>
+            <label>გვარი</label>
             <input
+              className="register-form"
               type="text"
               name="surname"
-              className="register-form"
               style={{ width: "100%" }}
-              placeholder="გვარი"
-              value={formData.lastName}
+              value={formData.surname}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={4}>
+            <label>ასაკი</label>
             <input
+              className="register-form"
               type="number"
               name="age"
-              className="register-form"
               style={{ width: "100%" }}
-              placeholder="ასაკი"
               value={formData.age}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={4}>
+            <label>ტელეფონი</label>
             <input
+              className="register-form"
+              type="text"
+              name="phone"
+              style={{ width: "100%" }}
+              value={formData.phone}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <label>დაბადების თარიღი</label>
+            <input
+              className="register-form"
+              type="date"
+              name="birthdate"
+              style={{ width: "100%" }}
+              value={formData.birthdate}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <label>თანამდებობა</label>
+            <input
+              className="register-form"
+              type="text"
+              name="position"
+              style={{ width: "100%" }}
+              value={formData.position}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <label>სანდო კონტაქტი</label>
+            <input
+              className="register-form"
+              type="text"
+              name="trustedContact"
+              style={{ width: "100%" }}
+              value={formData.trustedContact}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <label>დასაქმების თარიღი</label>
+            <input
+              className="register-form"
+              type="date"
+              name="hiredDate"
+              style={{ width: "100%" }}
+              value={formData.hiredDate}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <label>ფოტო</label>
+            <input
+              className="register-form"
               type="file"
               name="icon"
-              placeholder="ფოტო"
-              className="register-form"
               style={{ width: "100%" }}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={4}>
+            <label>პაროლი</label>
             <input
+              className="register-form"
               type="password"
               name="password"
-              placeholder="პაროლი"
-              className="register-form"
               style={{ width: "100%" }}
               onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
-            <button
-              className="log-out"
-              type="submit"
-              onClick={handleSubmit}
-              variant="contained"
-              color="primary"
-            >
+            <button className="log-out" type="submit" onClick={handleSubmit}>
               რეგისტრაცია
             </button>
           </Grid>
         </Grid>
       </form>
 
-      {/* Snackbar for feedback */}
       <Snackbar
         open={open}
         autoHideDuration={4000}
