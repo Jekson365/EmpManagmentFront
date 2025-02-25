@@ -13,9 +13,6 @@ function Navigation() {
   useEffect(() => {
     localStorage.setItem("currentPage", JSON.stringify(page));
   }, [page]);
-  useEffect(() => {
-    console.log(user);
-  }, []);
   return (
     <>
       <Stack

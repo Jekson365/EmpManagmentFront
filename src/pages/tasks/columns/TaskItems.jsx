@@ -18,7 +18,7 @@ function TaskItems() {
 
   const filterTaskItems = (statusId) => {
     setTaskStatus(statusId);
-  };
+};
   const handleRemoveFilter = () => {
     handleTasks(null);
   };
