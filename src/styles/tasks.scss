@@ -105,6 +105,47 @@
   &::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+  .note-container {
+    margin-bottom: 0px;
+    height: 0;
+    background-color: rgb(235, 235, 235);
+    border-radius: 4px;
+    transition: 0.3s;
+    position: relative;
+    input {
+      border: 0;
+      background-color: transparent;
+      outline: 0;
+      height: 100%;
+      width: 70%;
+      padding: 0px 10px;
+      display: flex;
+      align-items: center;
+    }
+    .submit {
+      position: absolute;
+      top: 50%;
+      transform: translate(0%,-50%);
+      height: 60%;
+      padding: 0 10px;
+      color: white;
+      font-weight: bold;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+      background-color: $color-secondary-green;
+      right: 10px;
+      transition: 0.3s;
+      font-size: 11px;
+      &:hover {
+        transform: scale(1.05) translate(0,-50%);
+      }
+    }
+  }
+  .note-container-active {
+    height: 60px;
+    margin-bottom: 10px;
+  }
   .emp-list-item {
     position: relative;
     background-color: $color-secondary-green;
@@ -116,6 +157,29 @@
       justify-content: center;
       border: 2px solid white;
       background-size: cover;
+      cursor: pointer;
+      position: relative;
+      transition: 0.3s;
+      .note-icon {
+        opacity: 0;
+        background-color: rgba(255, 255, 255, 0.867);
+        color: $color-secondary-green;
+        width: 80%;
+        height: 80%;
+        display: flex;
+        transform: translate(-50%, -50%);
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      &:hover .note-icon {
+        opacity: 1;
+      }
     }
   }
 }

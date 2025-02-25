@@ -29,7 +29,7 @@ export const navigationParams = [
     id: 2,
     sectionName: "მომხმარებლები",
     icon: <GroupIcon className="color-light" />,
-    needSuperAdmin: false,
+    needSuperAdmin: true,
     element: null,
     items: [
       {

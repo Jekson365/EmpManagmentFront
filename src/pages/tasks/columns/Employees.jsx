@@ -1,14 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UseUsers from "../../../hooks/users/UseUsers";
 import { Box, CircularProgress, Grid, Stack, Typography } from "@mui/material";
 import { AssignTaskContext, TaskItemContext } from "../Tasks";
 import UseAssignTask from "../../../hooks/tasks/UseAssignTask";
 import { Add } from "@mui/icons-material";
-import UseTasks from "../../../hooks/tasks/UseTasks";
-import AssignedUsers from "../../../components/users/AssignedUsers";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import CreateNote from "../../../components/notes/CreateNote";
 
 function Employees() {
   const { users, getUsers, loading } = UseUsers();
+  const [noteOpen, setNoteOpen] = useState({ open: false, userId: null });
   const { tasks, setTasks } = useContext(TaskItemContext);
   const { assignTask, setAssignTask } = useContext(AssignTaskContext);
   const { handleTaskAssign } = UseAssignTask();
@@ -18,11 +19,13 @@ function Employees() {
     const isAdded = currentTask.assignedUsers.find((au) => au.id == user.id);
     if (!isAdded) {
       currentTask.assignedUsers.push(user);
-      setTasks(tasks.map(task => task.id === currentTask.id ? currentTask : task));
+      setTasks(
+        tasks.map((task) => (task.id === currentTask.id ? currentTask : task))
+      );
       setAssignTask({ taskId: "", userId: "" });
     }
   };
-  
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -59,6 +62,14 @@ function Employees() {
                         ) : null}
                       </Grid>
                       <Grid item xs={11}>
+                        <div
+                          className={`note-container ${user.id == noteOpen.userId && noteOpen.open ? "note-container-active" : null}`}
+                        >
+                          <CreateNote
+                            setNoteOpen={setNoteOpen}
+                            userId={noteOpen.userId}
+                          />
+                        </div>
                         <Box className="emp-list-item">
                           <Stack direction={"row"}>
                             <Stack
@@ -79,6 +90,17 @@ function Employees() {
                                     user.iconPath == null ? "#f29f67" : null,
                                 }}
                               >
+                                <div
+                                  className="note-icon"
+                                  onClick={() =>
+                                    setNoteOpen({
+                                      userId: user.id,
+                                      open: true,
+                                    })
+                                  }
+                                >
+                                  <EditNoteIcon />
+                                </div>
                                 {user.iconPath === null
                                   ? user.name[0] + " " + user.surname[0]
                                   : null}

@@ -1,0 +1,41 @@
+@import "./config.scss";
+
+.column {
+  border-radius: 25px;
+  border: 4px solid $color-secondary-green;
+  width: 100%;
+  height: 90%;
+  background-color: $color-primary-green-light;
+}
+.basic-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .profile-icon {
+    background-size: cover;
+    border: 4px solid $color-secondary-green;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  .name,
+  .surname,
+  .position {
+    color: $color-secondary-green;
+  }
+  .name,
+  .surname {
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
+
+.about-section {
+  .sec-title {
+    font-weight: bold;
+    color: $color-secondary-green;
+  }
+  .sec-value {
+    color: $color-secondary-green;
+  }
+}
