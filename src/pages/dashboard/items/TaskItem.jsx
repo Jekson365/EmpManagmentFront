@@ -5,7 +5,7 @@ import UpdateTaskStatus from "../../../components/task-statuses/UpdateTaskStatus
 import AssignedUsers from "../../../components/users/AssignedUsers";
 import AssignedTo from "../../../components/tasks/AssignedTo";
 
-function TaskItem({ params }) {
+function TaskItem({ params, setCurrentTaskId }) {
   const [assignedUsers, setAssignedUsers] = useState(params.assignedUsers);
 
   const handleUpdateTasks = (taskId, userId) => {
@@ -21,7 +21,12 @@ function TaskItem({ params }) {
         alignItems={"center"}
         width={"98%"}
       >
-        <Typography className="title">{params.title}</Typography>
+        <Typography
+          onClick={() => setCurrentTaskId(params.id)}
+          className="title"
+        >
+          {params.title}
+        </Typography>
         <Stack direction={"row"} gap={"12px"}>
           {assignedUsers.map((user) => {
             return (

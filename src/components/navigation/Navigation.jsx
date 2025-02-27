@@ -91,6 +91,7 @@ function Navigation() {
                                     direction={"row"}
                                     gap={"10px"}
                                     ml={2}
+                                    alignItems={'center'}
                                     style={{ opacity: "0.8" }}
                                     className="nav-sub-item"
                                     onClick={() =>

@@ -18,7 +18,7 @@ import Profile from "./profile/Profile";
 
 function DashboardLayout() {
   const { result, loading, handleUserTasks } = UseUserTasks();
-  const [currentTaskId, setCurrentTaskUd] = useState({});
+  const [currentTaskId, setCurrentTaskId] = useState({});
   const { notes, notesLoading, handleNotes } = UseNoteByUser();
   const { user } = useContext(CurrentUserContext);
 
@@ -32,7 +32,7 @@ function DashboardLayout() {
         <>
           <CurrentTask
             taskId={currentTaskId}
-            setCurrentTaskId={setCurrentTaskUd}
+            setCurrentTaskId={setCurrentTaskId}
           />
         </>
       ) : null}
@@ -63,9 +63,11 @@ function DashboardLayout() {
                       {result.map((e) => {
                         return (
                           <>
-                            <div onClick={() => setCurrentTaskUd(e.id)}>
-                              <TaskItem cla-ssName="task-item" params={e} />
-                            </div>
+                            
+                              <TaskItem 
+                              setCurrentTaskId={setCurrentTaskId}
+                              className="task-item" params={e} />
+                            
                           </>
                         );
                       })}

@@ -20,11 +20,16 @@
       top: 50%;
       border-radius: 50%;
       left: 50%;
-      transform: translate(-50%,-51%);
+      transform: translate(-50%, -51%);
     }
   }
   .name {
     font-size: 13px;
+  }
+}
+.error-bar {
+  &::-webkit-scrollbar {
+    width: 0;
   }
 }
 .assigned-to {
@@ -86,7 +91,7 @@
     border: 1px solid $color-secondary-green;
     color: $color-secondary-green;
     font-weight: bold;
-    background-color: rgb(189, 255, 192);
+    background-color: $color-primary-green-light;
     padding: 2px 20px;
     font-size: 14px;
     border-radius: 50px;
@@ -94,7 +99,7 @@
   .header-icon {
     background-size: cover;
     width: 50px;
-    
+
     height: 50px;
     border-radius: 50%;
   }

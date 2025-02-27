@@ -8,6 +8,7 @@ import {
   Dashboard,
   Person,
 } from "@mui/icons-material";
+import EventNoteIcon from "@mui/icons-material/EventNote";
 import GroupIcon from "@mui/icons-material/Group";
 import Register from "./pages/auth/Register";
 import Tasks from "./pages/tasks/Tasks";
@@ -16,14 +17,23 @@ import NewTask from "./pages/tasks/newtasks/NewTask";
 import { useContext } from "react";
 import { CurrentUserContext } from "./App";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
+import Vacation from "./pages/vacation/Vacation";
 export const navigationParams = [
   {
     id: 1,
     sectionName: "დეშბორდი",
     icon: <Dashboard className="color-light" />,
     needSuperAdmin: false,
-    items: [],
     element: <DashboardLayout />,
+    items: [
+      {
+        icon: <EventNoteIcon className="color-light" />,
+        needSuperAdmin: false,
+        id: 2,
+        title: "შვებულება",
+        component: <Vacation />,
+      },
+    ],
   },
   {
     id: 2,

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { Alert, Grid, Snackbar } from "@mui/material";
+import { Alert, Grid, Snackbar, Stack } from "@mui/material";
 import UseRegister from "../../hooks/users/UseRegister";
+import ValidationErrors from "../../components/errors/ValidationErrors";
 
 function Register() {
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
-  const { handleRegister } = UseRegister();
+  const { handleRegister, response } = UseRegister();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success");
@@ -41,17 +43,65 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await handleRegister(formData);
-      window.location.reload();
-    } catch (err) {
-      throw err;
+    const { email, name, surname, age, phone, icon } = formData;
+    if (
+      email == "" ||
+      name == "" ||
+      surname == "" ||
+      age == "" ||
+      phone == ""
+    ) {
+      setErrors(["აუცილებელია ველების შევსება"]);
+    }
+    if (icon == null) {
+      setErrors([...errors, "ფოტო აუციელებელია"]);
+    } else {
+      e.preventDefault();
+      try {
+        await handleRegister(formData);
+        window.location.reload();
+      } catch (err) {
+        throw err;
+      }
     }
   };
 
   return (
     <>
+      {errors.length >= 0 ? (
+        <>
+          <Stack
+            direction={"column"}
+            gap={"10px"}
+            justifyContent={"end"}
+            style={{
+              whiteSpace: "nowrap",
+              position: "absolute",
+              bottom: "50px",
+              right: "50px",
+              height: "300px",
+              overflowY: "scroll",
+            }}
+            className="error-bar"
+          >
+            {errors.map((e) => {
+              return (
+                <>
+                  <Alert severity="error">
+                    <div
+                      style={{
+                        fontSize: "13px",
+                      }}
+                    >
+                      {e}
+                    </div>
+                  </Alert>
+                </>
+              );
+            })}
+          </Stack>
+        </>
+      ) : null}
       <form encType="multipart/form-data">
         <Grid container spacing={2}>
           <Grid item xs={4}>
