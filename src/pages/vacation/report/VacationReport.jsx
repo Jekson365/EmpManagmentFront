@@ -6,9 +6,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import UseVacationIndex from "../../../hooks/vacation/UseIndexVacation";
+import { CurrentUserContext } from "../../../App";
 
 function VacationReport() {
+  const { user } = useContext(CurrentUserContext);
+  const { vacations, useVacation } = UseVacationIndex();
   function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
   }
@@ -25,32 +29,37 @@ function VacationReport() {
     createData("Muffin", 398, 21.0, 45, 5.0),
   ];
 
+  useEffect(() => {
+    useVacation(user.id);
+    console.log(vacations);
+  }, []);
   return (
     <Grid container mt={3}>
       <Grid item xs={12}>
-        <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
+        <TableContainer component={Paper} sx={{ maxHeight: 350 }}>
           <Table stickyHeader sx={{ minWidth: 700 }}>
             <TableHead>
               <TableRow>
-                <TableCell>Dessert (100g serving)</TableCell>
-                <TableCell align="right">Calories</TableCell>
-                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                <TableCell>მომხმარებლის ID</TableCell>
+                <TableCell align="right">დაწყების თარიღი</TableCell>
+                <TableCell align="right">დასრულების თარიღი</TableCell>
+                <TableCell align="right">მიმგარებულია</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
-                </TableRow>
-              ))}
+              {vacations &&
+                vacations.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell component="th" scope="row">
+                      {row.id}
+                    </TableCell>
+                    <TableCell align="right">{row.fromDate}</TableCell>
+                    <TableCell align="right">{row.toDate}</TableCell>
+                    <TableCell align="right">
+                      {row.assignedToUser?.name} {row.assignedToUser.surname}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
