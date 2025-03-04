@@ -13,7 +13,7 @@ function UseVacationIndex() {
     }
   };
 
-  return { vacations, useVacation };
+  return { vacations, useVacation, setVacations };
 }
 
 export default UseVacationIndex;

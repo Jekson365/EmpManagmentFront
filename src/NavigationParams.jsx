@@ -14,8 +14,6 @@ import Register from "./pages/auth/Register";
 import Tasks from "./pages/tasks/Tasks";
 import MyTask from "./pages/tasks/mytasks/MyTask";
 import NewTask from "./pages/tasks/newtasks/NewTask";
-import { useContext } from "react";
-import { CurrentUserContext } from "./App";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Vacation from "./pages/vacation/Vacation";
 export const navigationParams = [

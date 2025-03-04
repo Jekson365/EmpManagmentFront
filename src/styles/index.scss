@@ -10,7 +10,7 @@ body {
   overflow: hidden;
 }
 .header-title {
-  font-weight: bold !important; 
+  font-weight: bold !important;
 }
 .cover {
   position: absolute;
@@ -126,4 +126,30 @@ body {
   padding: 9px 13px;
   font-weight: bold;
   font-size: 16px;
+}
+
+.select-input {
+  background-color: white;
+  padding: 10px;
+  outline: 0;
+  border-radius: 5px;
+  border: 2px solid $color-secondary-green;
+}
+
+.primary-button-danger {
+  background-color: $color-danger;
+  color: white;
+  padding: 10px 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    outline: 1px solid $color-danger;
+    background-color: transparent;
+    color: $color-danger;
+  }
 }

@@ -7,7 +7,7 @@ function UseCreateVacation() {
       const response = await API.post("api/vacation", params);
       return response.data;
     } catch (error) {
-      console.error("Error creating vacation:", error);
+      console.error("Error creating vacation:", ebrror);
       throw error;
     }
   };

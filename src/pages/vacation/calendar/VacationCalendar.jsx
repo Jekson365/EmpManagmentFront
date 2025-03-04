@@ -3,11 +3,15 @@ import { CurrentUserContext } from "../../../App";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../../../styles/vacation.scss";
-import { Grid, Stack } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import UseCreateVacation from "../../../hooks/vacation/UseCreateVacation";
+import UseUsers from "../../../hooks/users/UseUsers";
+import UseSupers from "../../../hooks/users/UseSupers";
 function VacationCalendar() {
   const { user } = useContext(CurrentUserContext);
+  const { users, getUsers, loading } = UseSupers();
   const { createVacation } = UseCreateVacation();
+  const [assigneedUser, setAssignedUser] = useState(null);
   const [selectedDates, setSelectedDates] = useState({
     startDate: new Date().toISOString().split("T")[0],
     endDate: new Date().toISOString().split("T")[0],
@@ -27,14 +31,13 @@ function VacationCalendar() {
       fromDate: selectedDates.startDate,
       toDate: selectedDates.endDate,
       createdById: user.id,
-      assignedUserId: 48,
+      assignedUserId: assigneedUser,
     });
-
-    console.log(result);
+    window.location.reload();
   };
   useEffect(() => {
-    console.log(selectedDates);
-  }, [selectedDates]);
+    getUsers();
+  }, []);
   return (
     <>
       <Grid container columnSpacing={3}>
@@ -77,7 +80,52 @@ function VacationCalendar() {
                 className="reason"
                 placeholder="შვებულების მიზეზი"
               />
-              <button className="log-out" onClick={handleVacationSubmit}>
+              {loading ? (
+                <></>
+              ) : (
+                <>
+                  <Typography mt={1}>მიმგარება</Typography>
+                  <Stack direction={"row"} gap={"5px"}>
+                    {users &&
+                      users.map((e) => {
+                        return (
+                          <>
+                            <div
+                              onClick={() => setAssignedUser(e.id)}
+                              className={`super-user ${e.id == assigneedUser ? "selected-super-user" : null}`}
+                            >
+                              <Stack
+                                direction={"row"}
+                                pl={2}
+                                pr={2}
+                                pt={0.5}
+                                pb={0.5}
+                                alignItems={"center"}
+                                gap={"10px"}
+                              >
+                                <Stack direction={"row"}>
+                                  {e.name} {e.surname}
+                                </Stack>
+                                <div
+                                  className="assigned-to"
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    backgroundImage: `url('${import.meta.env.VITE_API_URL}/uploads/${e.iconPath}`,
+                                  }}
+                                ></div>
+                              </Stack>
+                            </div>
+                          </>
+                        );
+                      })}
+                  </Stack>
+                </>
+              )}
+              <button
+                className="primary-button-danger"
+                onClick={handleVacationSubmit}
+              >
                 მოთხოვნა
               </button>
             </Stack>
